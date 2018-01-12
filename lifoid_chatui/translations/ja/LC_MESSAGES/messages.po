@@ -1,0 +1,285 @@
+# Japanese translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-12-05 11:34+0900\n"
+"PO-Revision-Date: 2017-11-12 20:38+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: iambot/www/chatui/templates/expired.html:38
+#: iambot/www/chatui/templates/index.html:81
+msgid "Loading..."
+msgstr "読み込み中"
+
+#: iambot/www/chatui/templates/expired.html:46
+msgid "You session has expired. Please login."
+msgstr "セッションが終了しました。 ログインしてください。"
+
+#: iambot/www/chatui/templates/expired.html:48
+msgid "Login"
+msgstr "ログイン"
+
+#: iambot/www/chatui/templates/index.html:99
+msgid "Chat"
+msgstr "チャット"
+
+#: iambot/www/chatui/templates/index.html:102
+msgid "Quick Start"
+msgstr ""
+
+#: iambot/www/chatui/templates/index.html:103
+msgid "Help"
+msgstr "Help"
+
+#: iambot/www/chatui/templates/index.html:141
+msgid "Or enter your message here."
+msgstr "ここにメッセージを入力してください。"
+
+#: iambot/www/chatui/templates/index.html:153
+#: iambot/www/chatui/templates/privacy.html:1047
+#: iambot/www/chatui/templates/terms.html:960
+msgid "Terms of Use"
+msgstr "本サイトの利用条件"
+
+#: iambot/www/chatui/templates/index.html:153
+#: iambot/www/chatui/templates/privacy.html:960
+#: iambot/www/chatui/templates/terms.html:1027
+msgid "Privacy Policy"
+msgstr "個人情報保護について"
+
+#: iambot/www/chatui/templates/index.html:212
+#, python-format
+msgid ""
+"Hello, my name is %(iambot_name)s. Please have a look at the Chat menu "
+"where you will find all the ways to start quickly the discussion. But "
+"first of all which language would you like to speak with me?"
+msgstr ""
+"こんにちは、私の名前は%(iambot_name)sです。"
+"チャットメニューを見て下さい。
+"まずは、言語を選択して頂き、それから速やかにチャットを開始する方法を見つけて下さい。"
+
+#: iambot/www/chatui/templates/privacy.html:964
+msgid ""
+"<p>Mibot will handle the personal information as follows.</p>\n"
+"<br />\n"
+"<h4>Purpose of the use of Personal Information.</h4>\n"
+"<p>Mibot will collect/use personal information for the following "
+"purposes.</p>\n"
+"<ul>\n"
+"<li>Sending of information on events and service and products.</li>\n"
+"<li>Sending of information on seminars held by Mibot and its "
+"partners.</li>\n"
+"<li>Execution of a contract concluded between Mibot and its "
+"customers.</li>\n"
+"<li>Contacts for business negotiations and meetings with its "
+"customers.</li>\n"
+"<li>Delivery of after-sales service of its products.</li>\n"
+"<li>Execution of business, including system development, operation and "
+"maintenance, entrusted by customers.</li>\n"
+"<li>Delivery of various membership services.</li>\n"
+"<li>Response to various inquiries from a customer.</li>\n"
+"<li>Analysis based on questionnaires to improve products and "
+"services.</li>\n"
+"<li>Provision of personal information to the group company in case of co-"
+"operation with them.</li>\n"
+"</ul>\n"
+"<br />\n"
+"<h4>Provision and Deposit of Personal Information.</h4>\n"
+"<ul>\n"
+"<li>Mibot will not provide or deposit personal information to a third "
+"party, except the following cases.</li>\n"
+"<li>Cases in which the provision of personal information is based on the "
+"prior consent from the person.</li>\n"
+"<li>Cases in which the provision of personal information is based on "
+"laws.</li>\n"
+"<li>Cases in which the provision of personal information is necessary for"
+" the protection of the life, body, or property of an individual and in "
+"which it is difficult to obtain the consent of the person.</li>\n"
+"<li>Cases in which the provision of personal information is specially "
+"necessary for improving public hygiene or promoting the sound growth of "
+"children and in which it is difficult to obtain the consent of the "
+"person.</li>\n"
+"<li>Cases in which the provision of personal information is necessary for"
+" cooperating with a state institution, a local public body, or an "
+"individual or entity entrusted by one in executing the operations "
+"prescribed by laws and in which obtaining the consent of the person might"
+" impede the execution of the operations concerned.</li>\n"
+"<li>Cases in which an entry handling personal information entrust the "
+"handling of personal information in whole or in part within the scope "
+"necessary for the achievement of the Purpose of Use.</li>\n"
+"<li>Case in which personal information is provided as a result of the "
+"take-over of business in a merger or otherwise. When required to do so "
+"for business activities in which Mibot is co-operating with the group "
+"companies or business partners, Mibot may provide such group companies "
+"and business partners with personal information such as a name, workplace"
+" or home addresses, telephone number, fax number, e-mail address, etc. If"
+" this is the case, the personal information will be provided in print or "
+"electronic media. In addition, the person may request us to stop the "
+"provision of the personal information with the group companies.</li>\n"
+"</ul>\n"
+"<br />\n"
+"<h4>Request to Disclose Personal Information.</h4>\n"
+"<p>When a customer herself/himself or representative wants to request to "
+"disclose, correct, or delete her/his personal information, Mibot will "
+"disclose, correct, or delete the personal information within a rational "
+"scope, except the following cases.</p>\n"
+"<ul>\n"
+"<li>Cases in which there is a possibility of damaging the life, body, "
+"property, or other benefits of a person or a third party.</li>\n"
+"<li>Cases in which it is recognized that it may impede the execution of "
+"the operations of Mibot.</li>\n"
+"<li>Cases in which it is violating the law.</li>\n"
+"</ul>\n"
+"<br />\n"
+"<h4>Request to Person.</h4>\n"
+"Please decide whether or not to register the customer's personal "
+"information, according to the intention of the customer herself/himself. "
+"However, please note that some services (including response to inquiries,"
+" etc.) are only available with the registration of the personal "
+"information.</p>\n"
+"<br />\n"
+"<h4>About Usage of Cookies and Web beacons.</h4>\n"
+"<p>Mibot uses cookies and Web beacons (clear GIF) in part of the website "
+"to make it more conveniently to use for person. A person can refuse to "
+"receive a cookie, or can display a warning message when receiving a "
+"cookie by changing the setting of a web browser. For more details, please"
+" see the instructions of a web browser you are using. Moreover, a person "
+"can reject a Web beacon by setting to refuse the receipt of a cookie. "
+"But, in the first case, please note that a person may not be able to use "
+"the all or part of our services provided in the website.</p>\n"
+"<br />\n"
+"<h4>Special Note.</h4>\n"
+"<p>Mibot may revise this document, “Privacy Policy” to improve the "
+"handling of personal information and/or due to the revision of laws or "
+"ordinances, or other rules or regulations.</p>"
+msgstr ""
+"<h4>取得・利用目的</h4><p>１．マイボットは、情報サービス業を主とした事業活動に関して、個人情報を次の各号の目的に達成に必要な範囲でのみ取得し、利用するものとします。</p><p>（１）ご本人さま、またはお客さまと当社との間で締結した契約の履行</p><p>（２）ご本人さま、またはお客さまとの商談、打合せのための連絡</p><p>（３）製品のアフターサービスの提供および催物開催、新商品のご案内の送付</p><p>（４）システム開発・運用・保守など、お客さまから当社に委託された業務の履行</p><p>（５）各種会員制サービスの提供</p><p>（６）株式に関する事務</p><p>（７）各種お問い合わせへの対応</p><p>（８）アンケートをもとにした製品やサービスを向上させるための分析</p><p>（９）当社主催の各種募集に関する事務</p><p>（10）選考及び採用についてのご連絡や資料の発送など、当社の採用活動</p><br"
+" "
+"/><h4>第三者提供</h4><p>２．当社は、あらかじめご本人さまの事前の同意を得ないで、ご本人さまの個人情報を第三者に提供しません。ただし、次の各号に該当する場合は除きます。</p><p>（１）法令に基づく場合</p><p>（２）人の生命、身体または財産の保護のために必要がある場合であって、ご本人さまの同意を得ることが困難である場合</p><p>（３）公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、ご本人さまの同意を得ることが困難である場合</p><p>（４）国の機関若しくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、ご本人さまの同意を得ることにより当該事務の遂行に支障を及ぼすおそれがある場合</p><p>（５）取得・利用目的の達成に必要な範囲で、個人情報の取扱いを委託する場合</p><p>（６）合併その他の事由による事業の承継に伴い、個人情報を提供する場合</p><br"
+" "
+"/><h4>関連会社による利用</h4><p>３．当社は、上記（１）各号の目的の達成に必要な範囲で、お名前並びに職場およびご自宅の住所、電話番号、FAX番号、電子メールアドレス等のご本人さまの個人情報につき、"
+" "
+"当社の関連会社に提供（共同利用も含む）することがあります。この場合、ご本人さまから個人情報を入手する際に、その取扱いに対して事前にご確認いただく文書（当ホームページでは個々の問い合わせ画面に表記している「ウェブサイト上の個人情報の取扱いについて」が該当します）にて、提供に対するご本人さまの同意を取得させていただきます。また、ご本人さまの個人情報は紙媒体または電子媒体で提供します。なお、ご本人さまは当社に対して、"
+" 当社の関連会社への個人情報の提供を停止するよう請求することができます。</p><br "
+"/><h4>クッキーおよびWebビーコンの利用</h4><p>４．当社のウェブサイトの一部では、当社のウェブサイトをご本人さまにより便利にご利用いただくために、クッキーやWebビーコンを利用しております。お客様は、ウェブブラウザの設定を変更することにより、クッキーの受け取りを拒否し、又は、クッキーを受け取った場合に警告を表示させることができます。詳しくは、ご使用のブラウザの説明をご覧ください。また、お客様は、クッキーの受け取りを拒否することによって、Webビーコンを拒否することができます。しかし、クッキーの受け取りを拒否された場合には、当社がウェブサイトにて提供するサービスの全部又は一部がご利用できなくなる場合もございますので、ご了承ください。</p><br"
+" "
+"/><h4>個人情報の開示等の請求、または苦情のお申し出に関して</h4><p>５．当社が保有しているご本人さまの個人情報について、開示、訂正、追加、削除、利用停止、第三者提供の停止、若しくは利用目的の通知（以下「開示等」といいます。）を請求される場合または苦情をお申出になる場合には、下記のとおりと致します。</p><p>（１）ご本人さまが当社の営業担当部署に提供された個人情報の開示等の請求</p><p>該当する営業担当部署へご連絡ください<p>（２）ご本人さまが当社のウェブサイトにて提供された個人情報の開示等の請求"
+" </p><p>該当するホームページを管理する担当部署にご連絡ください<p>（３）上記（１）および（２）以外の個人情報の開示等の請求 "
+"</p><p>開示等のご請求の詳細はこちらを参照願います。「開示等のご請求に関する詳細について」</p><p>（４）当社の個人情報の取扱いに関する苦情"
+" "
+"</p><p>「個人情報の取扱いに関する苦情申出書」をダウンロードいただき、必要事項をご記入のうえ下記まで送付いただくか、お電話等でお問い合わせください。</p><p>「個人情報の取扱いに関する苦情申出書」</p>"
+
+#: iambot/www/chatui/templates/privacy.html:1014
+#: iambot/www/chatui/templates/terms.html:994
+msgid "Chat with Mibot"
+msgstr "チャット"
+
+#: iambot/www/chatui/templates/privacy.html:1046
+#: iambot/www/chatui/templates/privacy.html:1050
+#: iambot/www/chatui/templates/terms.html:1026
+#: iambot/www/chatui/templates/terms.html:1030
+msgid "Mibot, Inc."
+msgstr "マイボット株式会社"
+
+#: iambot/www/chatui/templates/privacy.html:1053
+#: iambot/www/chatui/templates/terms.html:1033
+msgid ""
+"Toranomon 30 Mori Bld. 9f, 3-2-2, Toranomon, Minato-ku, Tokyo, 105-0001, "
+"Japan"
+msgstr "所在地：　〒１０５－０００１　東京都港区虎ノ門３－２－２虎ノ門３０森ビル９階"
+
+#: iambot/www/chatui/templates/privacy.html:1056
+#: iambot/www/chatui/templates/terms.html:1036
+msgid "Tel: +81-3-6435-9295"
+msgstr "ご用件は、次の電話番号までご連絡下さい。 +81-3-6435-9295"
+
+#: iambot/www/chatui/templates/privacy.html:1059
+#: iambot/www/chatui/templates/terms.html:1039
+msgid "Email: <a href=\"mailto:support@mibot.legal\">support@mibot.legal</a>"
+msgstr ""
+
+#: iambot/www/chatui/templates/terms.html:964
+msgid ""
+"<h4>Definition.</h4> \n"
+"<p>In this Terms of Use, the following terms shall have the following "
+"meanings:</p>\n"
+"<p>“Mibot” means mibot inc. </p>\n"
+"<p>“You” means the person accessing/using the Website.</p>\n"
+"<p>“Website” means Mibot’s website including the services and products "
+"provided under such website.</p>\n"
+"<p>“Information” means any and all text, conversation, software, "
+"graphics, photos, logos, in the Website and documents created using the "
+"Website.\n"
+"<p>“IP” means any and all intellectual property rights (e.g. copyright, "
+"patent, trademark) in the Information. </p>\n"
+"<br />\n"
+"<h4>Acceptance.</h4>\n"
+"<p>By using the Website, you accept and agree to be bound by the Terms of"
+" Use. </p>\n"
+"<br />\n"
+"<h4>Information Purpose.</h4>\n"
+"<p>The Website is intended to provide you with useful information in "
+"drafting and reviewing contracts but is not intended to provide you with "
+"legal advices. Mibot recommends that you obtain legal counsel before "
+"using the contracts drafted or reviewed by Mibot. </p>\n"
+"<br />\n"
+"<h4>Intellectual Property. </h4>\n"
+"<p>Any and all IP is owned by Mibot. Mibot authorizes you use the Website"
+" and the Information for your information and personal use only. Except "
+"as expressly provided above, nothing contained herein shall be construed "
+"as conferring any license or right under any IP of Mibot.</p>\n"
+"<br />\n"
+"<h4>No Warranty.</h4>\n"
+"<p>The Information may include any inaccuracies or errors. THESE "
+"DOCUMENTS ARE PROVIDED “AS IS“ WITHOUT WARRANTY OF ANY KIND, EITHER "
+"EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES "
+"OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT"
+" OF ANY THIRD PARTY'S RIGHTS OF ANY KIND. IN NO EVENT, HITACHI EAST JAPAN"
+" SOLUTIONS, LTD. SHALL BE LIABLE FOR ANY SPECIAL, INDIRECT OR "
+"CONSEQUENTIAL DAMAGES WHATSOEVER OR ANY DAMAGES, WHETHER IN CONTRACT, "
+"TORT OR OTHERWISE, ARISING OUT OF OR IN CONNECTION WITH THE USE OF THE "
+"DOCUMENTS HEREIN. </p>\n"
+"<br />\n"
+"<h4>Termination.</h4>\n"
+"<p>Mibot may, at its sole discretion, terminate your access and use of "
+"the Website and the Information.</p>\n"
+"<br />\n"
+"<h4>Amendments.</h4>\n"
+"<p>The Terms of Use are subject to change at any time without notice.</p>"
+msgstr ""
+"<h4>（定義）</h4><p>１．本利用条件において、下記の用語は下記の意味を有するものとする。<p><p>（１）「マイボット」とはマイボット株式会社のことをいう。<p><p>（２）「あなた」とは、本サイトにアクセスまたは利用する者をいう。<p><p>（３）「本サイト」とは、マイボットのウェブサイトおよび同ウェブサイトにより提供されるサービスおよび製品をいう。<p><p>（４）「本情報」とは、本サイトの全ての情報をいい、テキスト、会話、グラフィックス、写真、ロゴ、本サイトにより作成された書類等を含む。<p><p>（５）「ＩＰ」とは、本情報に含まれる知的財産権（著作権、特許権、商標権等）をいう。<p><br"
+" /><h4>（承諾）</h4><p>２．本サイトを使用したことにより、あなたは本利用条件に承諾したものと看做されます。<p><br "
+"/><h4>（情報提供目的）</h4><p>３．本サイトは、あなたが契約をドラフトし、レビューをするために必要・有益な情報を提供することを目的とするものであり、法的なアドバイスを提供するものではありません。マイボットは、あなたが本サイトを使用してドラフト・レビューした契約書を弁護士にレビューしてもらうことをお勧めします。<p><br"
+" "
+"/><h4>（知的財産権）</h4><p>４．本情報に含まれる知的財産権は全てマイボットに帰属します。マイボットは、あなたが本情報を個人的に利用する目的においてのみ、その使用を許諾します。本サイトを上記以外の目的において本情報を利用することは禁止します。<p><br"
+" "
+"/><h4>（非保証）</h4><p>５．本情報には、不正確、不完全である情報を含む可能性があります。これらの情報は、マイボットは、本情報の正確性、完全性に関し如何なる保証もするものではありません。マイボットは、本情報が不正確、不完全であった場合でも一切責任を負いかねます。<p><br"
+" /><h4>（利用の中止）</h4><p>６．マイボットは、あなたが本サイト、本情報を利用すること中止することができます。<p><br "
+"/><h4>（変更）</h4><p>７．マイボットは、本利用条件を一方的に変更することができます。<p>"
+
+#~ msgid "Log Out"
+#~ msgstr "ログアウト"
+
+#~ msgid "Email: <a href=\"mailto:#\">support@mibot.legal</a>"
+#~ msgstr "Email: <a href=\"mailto:#\">support@mibot.legal</a>"
+
+#~ msgid ""
+#~ "Hello, my name is %(iambot_name)s. "
+#~ "Please have a look at the Chat "
+#~ "menu where you will find all the"
+#~ " ways to start quickly the "
+#~ "discussion."
+#~ msgstr ""
+

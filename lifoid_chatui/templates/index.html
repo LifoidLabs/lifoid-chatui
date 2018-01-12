@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>{{ lifoid_name }}</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,300,700" rel="stylesheet" id="fontFamilySrc" />
+	<link href="{{ url_for('chatui.static', filename='assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('chatui.static', filename='assets/plugins/bootstrap4/css/bootstrap.min.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('chatui.static', filename='assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('chatui.static', filename='assets/css/animate.min.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('chatui.static', filename='assets/css/style.min.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('chatui.static', filename='assets/css/style-bs4.min.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+    <link href="{{ url_for('chatui.static', filename='assets/plugins/gritter/css/jquery.gritter.css') }}" rel="stylesheet" />	
+	<!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+    
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/pace/pace.min.js') }}"></script>
+	<!-- ================== END BASE JS ================== -->
+	<!--[if lt IE 9]>
+	    <script src="{{ url_for('chatui.static', filename='assets/crossbrowserjs/excanvas.min.js') }}"></script>
+	<![endif]-->
+	<style>
+	td:focus {
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;	
+		outline: rgb(91, 157, 217) auto 5px;
+	}
+	.error {
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;
+		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;	
+		outline: thin auto red;
+		margin-left: 0px;
+	}
+	input .table-input {
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;	
+		outline: rgb(91, 157, 217) auto 5px;
+		outline-offset: 0px;
+		border: none;
+	}
+	table {
+		font-size: 12px;
+	}
+	table tr {
+		text-align: center;
+	}
+	table tr input {
+		vertical-align: middle;
+		margin-top: 5px;
+	}
+	.table > tbody > tr > td {
+		vertical-align: middle;		
+	}
+	input[type="text"] {
+	    padding: 6px;
+	    width: 100%;
+	    border-radius: 4px;
+	}
+		</style>
+</head>
+<body class="pace-top">
+<div id="content" style="visibility:hidden;">  
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="page-loader fade in"><span class="spinner">{{ _('Loading...') }}</span></div>
+	<!-- end #page-loader -->
+
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade page-container page-header-fixed page-sidebar-fixed page-with-two-sidebar page-with-footer page-without-sidebar">
+		<!-- begin #header -->
+		<div id="header" class="header navbar navbar-default navbar-fixed-top">
+			<!-- begin container-fluid -->
+			<div class="container-fluid">
+				<!-- begin mobile sidebar expand / collapse button -->
+				<div class="navbar-header">
+					<a href="{{ url_for('chatui.index', lang_code=lang) }}" class="navbar-brand">{{ lifoid_name }}</a>
+				</div>
+				<!-- end mobile sidebar expand / collapse button -->
+				<!-- begin navbar-left -->
+				<ul class="nav navbar-nav navbar-left">
+				  <li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-wechat fa-2x"></i> <span class="hidden-xs">{{ _('Chat') }}</span> <b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu pull-right">
+						<li><a id="quickStart" href="javascript:;">{{ _('Quick Start') }}</a></li>
+						<li><a id="help" href="javascript:;">{{ _('Help') }}</a></li>
+						<li><a id="english"  href="javascript:;">Speak English</a></li>
+						<li><a id="japanese"  href="javascript:;">日本語でチャットをする</a></li>
+					</ul>
+				  </li>
+		        </ul>
+				<!-- begin navbar-right -->
+				<ul class="nav navbar-nav navbar-right">
+				  {% if auth %}
+		          	<li><a id="signOut" href="javascript:;"><i class="fa fa-power-off fa-2x"></i></a></li>
+				  {% endif %}
+		        </ul>
+				<!-- end navbar-right -->
+			</div>
+			<!-- end container-fluid -->
+		</div>
+		<!-- end #header -->
+		
+		<!-- begin #content -->
+		<div id="content" class="content">
+			<!-- begin row -->
+			<div class="row justify-content-center">
+				<!-- begin panel -->
+				<div id ="target" class="col-lg-6">
+				</div>
+				<!-- end panel -->
+			</div>
+			<!-- begin #footer -->
+			<div id="footer" class="footer bg-white navbar-fixed-bottom">
+				<div class="row justify-content-center">
+					<div class="col-lg-6">
+						<form id="lifoid-form" name="send_message_form" class="form-inline">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button class="btn btn-primary" type="button" style="background-color:#51bfdb;">
+										<i class="fa fa-microphone"></i>
+									</button>
+								</div>
+								<input type="text" class="form-control" name="message" placeholder="{{ _('Or enter your message here.') }}" style="height:36px;">
+								<div class="input-group-btn">
+									<button class="btn btn-primary" type="submit" style="background-color:#51bfdb;">
+										<i class="fa fa-send"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>		
+				<div class="row justify-content-center" style="margin-top:15px;">
+					<div class="col-lg-6">
+						&copy; 2017 <b>{{ company_name }}</b> All Right Reserved. <a href="{{ url_for('chatui.terms', lang_code=lang) }}" style="color:#51bfdb;">{{ _('Terms of Use') }}</a>. <a href="{{ url_for('chatui.privacy', lang_code=lang) }}" style="color:#51bfdb;">{{ _('Privacy Policy') }}</a>
+          </div>				
+        </div>
+			</div>
+			<!-- end #footer -->
+		</div>
+		<!-- end #content -->
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/jquery/jquery-1.9.1.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/jquery/jquery-migrate-1.1.0.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/popper/js/popper.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap4/js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+	<!--[if lt IE 9]>
+		<script src="{{ url_for('chatui.static', filename='assets/crossbrowserjs/html5shiv.js') }}"></script>
+		<script src="{{ url_for('chatui.static', filename='assets/crossbrowserjs/respond.min.js') }}"></script>
+	<![endif]-->
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+	<!-- ================== END BASE JS ================== -->
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/gritter/js/jquery.gritter.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/js/apps.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/cognito/aws-cognito-sdk.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/cognito/amazon-cognito-auth.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/datetime/pretty.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/avatar/avatar.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/editable-table/jquery-editabletable.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/table-to-json/jquery.tabletojson.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/lifoid/jquery-lifoid-chat.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/moment.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+	
+	<script>
+  $(document).ready(function() {
+    var authData = {
+        ClientId : "{{ cognito_clientid }}",
+        AppWebDomain : "{{ cognito_appwebdomain }}",
+        TokenScopesArray : ["email","openid"],
+        RedirectUriSignIn : "{{ cognito_redirecturisignin }}",
+        RedirectUriSignOut : "{{ cognito_redirecturisignout }}"
+      };
+    App.init({
+      auth: {% if auth %}true{% else %}false{% endif %},
+      authData: authData
+    });
+    var options = {
+      debug: true,
+      auth: {% if auth %}true{% else %}false{% endif %},
+      lifoidId: '{{ lifoid_id }}',
+      lifoidName: '{{ lifoid_name }}',
+      lifoidAvatar: '{{ url_for("chatui.static", filename="assets/img/mibot.png") }}',
+      url: '{{ path_url }}',
+      authData : authData,
+      textFormId: 'lifoid-form',
+      welcomeMsg: '{{ _("Hello, my name is %(lifoid_name)s. Please have a look at the Chat menu where you will find all the ways to start quickly the discussion. But first of all which language would you like to speak with me?", lifoid_name=lifoid_name) }}',
+      expiredUrl: '{{ url_for("chatui.expired", lang_code=lang) }}'
+    };
+    $('#target').lifoidchat(options);
+  });
+	</script>
+</div>
+</body>
+</html>
+

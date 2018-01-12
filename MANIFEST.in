@@ -1,0 +1,4 @@
+include LICENSE README.md
+recursive-include lifoid_chatui *.html *.js *.css *.woff2 *.png *.po *.mo *.pot
+include *.js
+include *.html
