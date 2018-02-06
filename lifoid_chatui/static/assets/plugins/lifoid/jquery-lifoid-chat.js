@@ -89,13 +89,13 @@
         return dNow.toISOString().substr(0, 19) + '.' + dNow.getUTCMilliseconds(); 
       };
 
-      var LIFOID = function(user) {
+      var LIFOID = function(user, lifoidId) {
       
         var self = this;
         self.url = user.url;
         self.access_token = user.access_token;
         self.username = user.username;
-
+        self.lifoid_id = lifoidId
         self.load = function(to_date, callback, error) {
           /* 
            * Get 100 items older than to_date
@@ -104,6 +104,7 @@
             type: 'POST',
             url: self.url + '/messages',
             data: JSON.stringify({
+              lifoid_id: self.lifoid_id,
               access_token: self.access_token,
               to_date: to_date,
               user: {username: self.username}
@@ -134,6 +135,7 @@
                 type: 'POST',
                 url: self.url + '/messages',
                 data: JSON.stringify({
+                  lifoid_id: self.lifoid_id,
                   access_token: self.access_token,
                   from_date: from_date,
                   user: {username: self.username}
@@ -424,7 +426,7 @@
         // Add two users: myself and Lifoid
         users[me.id] = new User(me.id, me.username);
         users[options.lifoidId] = new User(options.lifoidId, options.lifoidName);
-        lifoid = new LIFOID(me);
+        lifoid = new LIFOID(me, options.lifoidId);
         var to_now = now();
         console_debug('fetch:' + to_now);
 				var send_message = function(bot, user, text, attachments) {
@@ -435,7 +437,8 @@
 						{
 							q: { text: text, attachments: attachments },
 							access_token: user.access_token,
-              user: {username: user.username}
+              user: {username: user.username},
+              chatbot_id: options.lifoidId
 						},
 						function(data) {
 							for (var i = 0 ; i < data.length; i++) {

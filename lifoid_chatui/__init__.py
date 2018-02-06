@@ -51,6 +51,14 @@ def index(lang_code):
     """
     Website root
     """
+    return index_chatbot(settings.lifoid_id, lang_code)
+
+
+@chatui.route('/chatbot/<chatbot_id>/lang/<lang_code>')
+def index_chatbot(chatbot_id, lang_code):
+    """
+    Website root
+    """
     logger.debug('Blueprint index invoked')
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code
     refresh()
@@ -63,7 +71,7 @@ def index(lang_code):
         path_url=settings.path_url,
         auth=cognito_auth,
         company_name=settings.company_name,
-        lifoid_id=settings.lifoid_id,
+        lifoid_id=chatbot_id,
         lifoid_name=settings.lifoid_name,
         cognito_clientid=settings.cognito.client_id,
         cognito_appwebdomain=settings.cognito.appwebdomain,
