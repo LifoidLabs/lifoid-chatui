@@ -653,7 +653,7 @@ var App = function () {
 		initPageLoad: function() {
 		    handlePageLoad();
 		},
-		init: function (options) {
+		init: function (options, target) {
 		    this.initTopMenu();
 		    this.initSidebar();
 		    this.initComponent();
@@ -662,7 +662,8 @@ var App = function () {
           this.initAuth(options.authData);
         else
           document.getElementById("content").style.visibility='visible';
-		},
+		target.lifoidchat(options);
+        },
     initAuth: function (authData) {
       handleAuth(authData);
     },

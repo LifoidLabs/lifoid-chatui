@@ -3,11 +3,17 @@
  *
  * Copyright (c) 2017 Romary Dupuis
  */
-(function ($) {
+ (function ($) {
 
   $.fn.lifoidchat = function(options) {
 
     var lifoid = null;
+
+    var recordClickCounter = 0;
+      
+    var stream;
+      
+    var recorder;
     
     var console_error = function(message) {
       if(typeof console !== "undefined" && typeof console.error !== "undefined") {
@@ -102,9 +108,10 @@
            * */
           $.ajax({
             type: 'POST',
+            crossDomain: true,
             url: self.url + '/messages',
             data: JSON.stringify({
-              lifoid_id: self.lifoid_id,
+              chatbot_id: self.lifoid_id,
               access_token: self.access_token,
               to_date: to_date,
               user: {username: self.username}
@@ -133,9 +140,10 @@
             // Call Lifoid endpoint
               $.ajax({
                 type: 'POST',
+                crossDomain: true,
                 url: self.url + '/messages',
                 data: JSON.stringify({
-                  lifoid_id: self.lifoid_id,
+                  chatbot_id: self.lifoid_id,
                   access_token: self.access_token,
                   from_date: from_date,
                   user: {username: self.username}
@@ -161,6 +169,7 @@
         self.publish = function(message, incoming, error) {
             $.ajax({
               type: 'POST',
+              crossDomain: true,
               url: self.url + '/webhook',
               data: JSON.stringify(message),
               contentType: 'application/json',
@@ -236,7 +245,7 @@
                       self.$tpl
                         .find('.btn-group')
                         .append('<button type="button" class="btn btn-info lifoid-qr" data-value="'+
-														content.attachments[i].actions[j].value+'">' +
+                            content.attachments[i].actions[j].value+'">' +
                             content.attachments[i].actions[j].name  + '</button>');
                     }
                   }
@@ -429,59 +438,101 @@
         lifoid = new LIFOID(me, options.lifoidId);
         var to_now = now();
         console_debug('fetch:' + to_now);
-				var send_message = function(bot, user, text, attachments) {
-					var utcnow = now();
-					users[user.id].chat({ text: text, attachments: attachments }, utcnow);
-					$("html, body").animate({ scrollTop: $(document).height() }, 100);
-					lifoid.publish(
-						{
-							q: { text: text, attachments: attachments },
-							access_token: user.access_token,
+        var send_message = function(bot, user, text, attachments) {
+          var utcnow = now();
+          if (text.indexOf('chatui-open') == -1)
+            users[user.id].chat({ text: text, attachments: attachments }, utcnow);
+          $("html, body").animate({ scrollTop: $(document).height() }, 100);
+          lifoid.publish(
+            {
+              q: { text: text, attachments: attachments },
+              access_token: user.access_token,
               user: {username: user.username},
               chatbot_id: options.lifoidId
-						},
-						function(data) {
-							for (var i = 0 ; i < data.length; i++) {
-								//if ((get_latest() != undefined) && (data[i].date <= get_latest()))
-								//	continue;
-								users[data[i].from_user].chat(data[i].payload, data[i].date);
-							}
-							$("html, body").animate({ scrollTop: $(document).height() }, 100);
-						},
-						console_error
-					);
-				};
+            },
+            function(data) {
+              for (var i = 0 ; i < data.length; i++) {
+                //if ((get_latest() != undefined) && (data[i].date <= get_latest()))
+                //  continue;
+                var form = new FormData();
+                form.append("text", data[i].payload.text);
+                $.ajax({
+                    url: me.url + "/speech/tts",
+                    crossDomain: true,
+                    type: "POST",
+                    data: form,
+                    contentType: false,
+                    processData: false,
+                    success: function(resp) {
+                      function _base64ToArrayBuffer(base64) {
+                          var binary_string =  window.atob(base64);
+                          var len = binary_string.length;
+                          var bytes = new Uint8Array( len );
+                          for (var i = 0; i < len; i++)        {
+                              bytes[i] = binary_string.charCodeAt(i);
+                          }
+                          return bytes;
+                      }
+
+                      var audioElement = document.createElement('audio');
+                      var uInt8Array = _base64ToArrayBuffer(resp.audio);
+                      var arrayBuffer = uInt8Array.buffer;
+                      var blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
+                      var url = URL.createObjectURL(blob);
+
+                      audioElement.src = url;
+
+                      audioElement.addEventListener('ended', function () {
+                        audioElement.currentTime = 0;
+                        if (typeof callback === 'function') {
+                          console.log('audio playback ended');
+                        }
+                      });
+                      audioElement.play();
+                    }
+                  });
+                users[data[i].from_user].chat(data[i].payload, data[i].date);
+              }
+              $("html, body").animate({ scrollTop: $(document).height() }, 100);
+            },
+            console_error
+          );
+        };
+        /*
         document.getElementById("quickStart").addEventListener("click", function() {
           send_message(lifoid, me, $(this).html());
         });
+        */
         document.getElementById("help").addEventListener("click", function() {
           send_message(lifoid, me, $(this).html());
         });
+        /*
         document.getElementById("english").addEventListener("click", function() {
           send_message(lifoid, me, $(this).html());
         });
         document.getElementById("japanese").addEventListener("click", function() {
           send_message(lifoid, me, $(this).html());
         });
-				$chat.on('click', '.lifoid-qr', function(){
-					valueSelected = $(this).attr('data-value');
-					this.parentNode.remove();
-					//$('.lifoid-qr').remove();
-					send_message(lifoid, me, valueSelected);
-				});
-				$chat.on('change', '.lifoid-ms', function(){
-					var optionSelected = $("option:selected", this);
-					var valueSelected = this.value;
-					$('.lifoid-ms').remove();
-					send_message(lifoid, me, valueSelected);
-				});
-				$chat.on('click', '.send-table', function(){
+        */
+        $chat.on('click', '.lifoid-qr', function(){
+          valueSelected = $(this).attr('data-value');
+          this.parentNode.remove();
+          //$('.lifoid-qr').remove();
+          send_message(lifoid, me, valueSelected);
+        });
+        $chat.on('change', '.lifoid-ms', function(){
+          var optionSelected = $("option:selected", this);
+          var valueSelected = this.value;
+          $('.lifoid-ms').remove();
+          send_message(lifoid, me, valueSelected);
+        });
+        $chat.on('click', '.send-table', function(){
           var table = $chat.find('.lifoid-edit-table');
           var json_table = table.tableToJSON({
             ignoreColumns: [0],
             textDataOverride: 'data-value'
           });
-					send_message(lifoid, me, table.attr('data-title'),
+          send_message(lifoid, me, table.attr('data-title'),
              [{ table: { title: table.attr('data-title'), name: table.attr('data-name'),
                rows: json_table, columns: table.attr('data-columns').split(',') } }]);
           $chat.find('.panel').remove();
@@ -503,31 +554,97 @@
         $('#' + options.textFormId).submit(function() {
           var $text = $('input[type="text"]');
           if($text.val()) {
-						send_message(lifoid, me, $text.val());
+            send_message(lifoid, me, $text.val());
             $text.val('');
-						$('.lifoid-ms').remove();
-						$('.lifoid-qr').remove();
+            $('.lifoid-ms').remove();
+            $('.lifoid-qr').remove();
           }
           return false;
         });
-        
-				lifoid.load(
+
+        /******  Speech experimentation  ******/
+        //$(this).ajaxStart(function() { NProgress.start() });
+        //$(this).ajaxStop(function() { NProgress.done() });
+
+        // start/stop recording every other time the button is clicked
+        $("#record").click(function() {
+          if(recordClickCounter++ % 2 == 0) {
+
+            // user started recording, restyle into 'stop' button
+            $(this).removeClass("btn-primary");
+            $(this).addClass("btn-danger");
+
+            // set up audio recorder and connect to backend service
+            navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+            navigator.getUserMedia_({audio: true}, 
+
+              function(innerStream) {
+                stream = innerStream;
+                recorder = new MediaStreamRecorder(stream);
+      
+                // todo: probably room for optimizations (ideally convert to flac)
+                recorder.mimeType = "audio/wav";
+                recorder.sampleRate = 44100;
+                recorder.audioChannels = 1;
+      
+                // this event is fired whenever time's up or stop() is called
+                recorder.ondataavailable = function(audio) {
+      
+                  // wrap audio blob in form data in order to post it to backend
+                  var data = new FormData();
+                  data.append("file", audio);
+                  
+                  // post audio blob to backend
+                  $.ajax({
+                    url: me.url + "/speech/stt",
+                    crossDomain: true,
+                    type: "POST",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    success: function(resp) {
+                      // todo: implement proper error handling
+                      var transcript;
+                      try {
+                        transcript = resp.results[0].alternatives[0].transcript;
+                      } catch(error) {
+                        transcript = "\"\"";
+                      }
+
+                      console.log(JSON.stringify(resp, null, 2));
+                      send_message(lifoid, me, transcript);
+                    }
+                  });
+                };
+
+                // start the actual recording, run for 60 secs max
+                recorder.start(6000);
+              },
+
+              function(e) {
+                console.error("Couldn't connect to user's audio input", e);
+              }
+
+            );
+
+          } else {
+
+            // user stopped recording, restyle into 'start' button
+            $(this).removeClass("btn-danger");
+            $(this).addClass("btn-primary");
+
+            // kill recording and stop hogging user's microphone
+            recorder.stop();
+            stream.stop();
+
+          }
+
+        });
+        /****** End speech experimentation  ******/
+
+        lifoid.load(
           to_now, 
           function(data) {
-            if (data.length == 0) {
-              // Welcome message
-              welcome_now = now();
-              users[options.lifoidId].chat({ 
-                text: options.welcomeMsg,
-                attachments: [
-                  { actions: [ 
-                    { name: 'English', style: 'default', text: 'English', type: 'button', value: 'Speak English'},
-                    { name: '日本語', style: 'default', text: '日本語', type: 'button', value: '日本語でチャットをする'}
-                    ]
-                  }
-                ] 
-              }, welcome_now);
-            }
             for (var i = data.length - 1 ; i >= 0; i--) {
               if ((get_latest() != undefined) && (data[i].date <= get_latest()))
                 continue;
@@ -538,10 +655,15 @@
                     continue
                   data[i].payload.attachments.splice(j, 1);
                 }
+                users[data[i].from_user].chat(data[i].payload, data[i].date);
               }
-              users[data[i].from_user].chat(data[i].payload, data[i].date);
+              else {
+                if (data[i].payload.text.indexOf('chatui-open') == -1)
+                  users[data[i].from_user].chat(data[i].payload, data[i].date);
+              }
             }
             $("html, body").animate({ scrollTop: $(document).height() }, 100);
+            send_message(lifoid, me, 'chatui-open');
           },
           console_error
         );

@@ -42,8 +42,13 @@ LICENSE = text_of('LICENSE')
 PACKAGES = find_packages(PROJECT, exclude=['tests', 'tests.*'])
 
 INSTALL_REQUIRES = [
+    'lifoid',
     'flask==0.12',
     'Flask-Babel==0.11.2',
+    'flask_s3',
+    'google-api-python-client',
+    'boto3',
+    'python-logging-mixin'
 ]
 TEST_SUITE = 'tests'
 TESTS_REQUIRE = ['pytest']
