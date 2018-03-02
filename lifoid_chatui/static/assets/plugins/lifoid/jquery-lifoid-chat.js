@@ -40,6 +40,7 @@
     var data_from_session = function(callback) {
       if (!options.auth) {
         return callback({
+          lang: options.lang,
           url: options.url,
           id: 'me',
           username: 'me',
@@ -48,6 +49,7 @@
       }
       session = auth(options.authData);
       var user = {
+        lang: options.lang,
         url: options.url,
         id: session.username,
         username: session.username,
@@ -98,6 +100,7 @@
       var LIFOID = function(user, lifoidId) {
       
         var self = this;
+        self.lang = user.lang;
         self.url = user.url;
         self.access_token = user.access_token;
         self.username = user.username;
@@ -112,6 +115,7 @@
             url: self.url + '/messages',
             data: JSON.stringify({
               chatbot_id: self.lifoid_id,
+              lang: self.lang,
               access_token: self.access_token,
               to_date: to_date,
               user: {username: self.username}
@@ -448,7 +452,8 @@
               q: { text: text, attachments: attachments },
               access_token: user.access_token,
               user: {username: user.username},
-              chatbot_id: options.lifoidId
+              chatbot_id: options.lifoidId,
+              lang: me.lang
             },
             function(data) {
               for (var i = 0 ; i < data.length; i++) {
@@ -475,6 +480,7 @@
                       }
 
                       var audioElement = document.createElement('audio');
+                      audioElement.autoplay = true;
                       var uInt8Array = _base64ToArrayBuffer(resp.audio);
                       var arrayBuffer = uInt8Array.buffer;
                       var blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});

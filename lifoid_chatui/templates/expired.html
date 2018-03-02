@@ -41,7 +41,7 @@
             <div class="error-content">
                 <div class="error-message m-b-5"><center>{{ _('You session has expired. Please login.') }}</center></div>
                 <div>
-                    <a href="{{ cognito_appwebdomain }}/login?redirect_uri={{ lifoid_url }}%2Fchatui/chatbot/{{ lifoid_id }}/lang/en&response_type=token&client_id={{ cognito_client_id }}&scope=email%20openid" class="btn btn-primary btn-rounded">{{ _('Login') }}</a>
+                    <a href="https://{{ cognito_appwebdomain }}/login?redirect_uri={{ cognito_redirecturisignin }}&response_type=token&client_id={{ cognito_clientid }}&scope=email%20openid" class="btn btn-primary btn-rounded">{{ _('Login') }}</a>
                 </div>
             </div>
         </div>

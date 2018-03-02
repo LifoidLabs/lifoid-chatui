@@ -46,7 +46,7 @@ INSTALL_REQUIRES = [
     'flask==0.12',
     'Flask-Babel==0.11.2',
     'flask_s3',
-    'google-api-python-client',
+    'google-cloud-speech',
     'boto3',
     'python-logging-mixin'
 ]
