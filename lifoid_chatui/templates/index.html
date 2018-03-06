@@ -73,7 +73,17 @@
 	    width: 100%;
 	    border-radius: 4px;
 	}
-		</style>
+	.btn.btn-primary {
+       background: #{{ color }};
+   	}
+   	.btn.btn-primary.active,
+	.btn.btn-primary:hover,
+	.btn.btn-primary:focus,
+	.btn.btn-primary:active, 
+	.open > .dropdown-toggle.btn-primary {
+	    background: #{{ color_active }};
+	}
+	</style>
 </head>
 <body class="pace-top">
 <div id="content" style="visibility:hidden;">  
@@ -186,6 +196,7 @@
     var options = {
       debug: true,
       auth: {% if auth %}true{% else %}false{% endif %},
+      color: '{{ color }}',
       authData : {
         ClientId : "{{ cognito_clientid }}",
         AppWebDomain : "{{ cognito_appwebdomain }}",

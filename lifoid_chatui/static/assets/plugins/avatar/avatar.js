@@ -2,14 +2,14 @@
  * Generate an avatar image from letters
  */
 
-function AvatarImage(letters, size) {
+function AvatarImage(letters, size, color) {
   var canvas = document.createElement('canvas');
   var context = canvas.getContext("2d");
   var size = size || 60;
 
   // Generate a random color every time function is called
   // var color =  "#" + (Math.random() * 0xFFFFFF << 0).toString(16);
-  var color = "#2184DA";
+  var color = "#" + color;
 
   // Set canvas with & height
   canvas.width = size;
@@ -35,12 +35,14 @@ function AvatarImage(letters, size) {
   return dataURI;
 }
 
-function generateAvatars() {
+function generateAvatars(color) {
   var images = document.querySelectorAll('img[letters]');
 
   for (var i = 0, len = images.length; i < len; i++) {
     var img = images[i];
-    img.src = AvatarImage(img.getAttribute('letters'), img.getAttribute('width'));
+    img.src = AvatarImage(img.getAttribute('letters'),
+                          img.getAttribute('width'),
+                          color);
     img.removeAttribute('letters');
   }
 }

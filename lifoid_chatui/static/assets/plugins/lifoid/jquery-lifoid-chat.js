@@ -202,7 +202,7 @@
         return self;
       }
       
-      var Message = function(type, username, date, content, lifoid) {
+      var Message = function(type, username, date, content, lifoid, color) {
 
         var self = this;
         self.$tpl = '';
@@ -222,7 +222,7 @@
               for (i = 0; i< content.attachments.length; i++) {
                 if (content.attachments[i].file_url != null) {
                   self.$tpl.append('<a href="'+ content.attachments[i].file_url  +
-                    '" target="_blank" class="btn btn-info m-t-5" style="margin-left:70px;">'+content.attachments[i].text+'</a>');
+                    '" target="_blank" class="btn btn-primary m-t-5" style="margin-left:70px;">'+content.attachments[i].text+'</a>');
                 }
                 if (content.attachments[i].actions != null) {
                   // ButtonAction and MenuAction
@@ -248,7 +248,7 @@
                     for (j = 0; j < content.attachments[i].actions.length; j++) {
                       self.$tpl
                         .find('.btn-group')
-                        .append('<button type="button" class="btn btn-info lifoid-qr" data-value="'+
+                        .append('<button type="button" class="btn btn-primary lifoid-qr" data-value="'+
                             content.attachments[i].actions[j].value+'">' +
                             content.attachments[i].actions[j].name  + '</button>');
                     }
@@ -297,8 +297,8 @@
                   }
                   self.$attachment_btn = $('\
                       <div class="btn-group m-t-5">\
-                        <button class="btn btn-info add-row btn-sm" type="button"><i class="fa fa-plus"></i></button>\
-                        <button class="btn btn-info send-table btn-sm" type="button"><i class="fa fa-send"></i></button>\
+                        <button class="btn btn-primary add-row btn-sm" type="button"><i class="fa fa-plus"></i></button>\
+                        <button class="btn btn-primary send-table btn-sm" type="button"><i class="fa fa-send"></i></button>\
                       </div>\
                       ');
                   self.$tpl.append(self.$attachment);
@@ -412,16 +412,20 @@
               } 
             }
           }
-          self.$tpl.find('.name').text(username).html(); // escape html
+          if (username.indexOf('Google') != -1) {
+            self.$tpl.find('.name').text('me').html(); // escape html
+          }
+          else
+            self.$tpl.find('.name').text(username).html(); // escape html
           self.$tpl.find('.text').text(content.text).html(); // escape html
           self.$tpl.find('.date-time').text(prettyDate(date)).html(); //escape html
           self.$tpl.prop('date', date);
         }
         $chat.append(self.$tpl);
-        generateAvatars();
+        generateAvatars(color);
       };
 
-      var User = function(id, username) {
+      var User = function(id, username, color) {
 
         var self = this;
 
@@ -429,16 +433,21 @@
         
         self.username = username;
 
+        self.color = color;
+
         self.chat = function(content, date) {
-          new Message('message', self.username, date, content, self.id == options.lifoidId);
+          new Message('message', self.username, date, content,
+                      self.id == options.lifoidId, self.color);
         };
         return self;
       };
 
       var init = function(me) {
         // Add two users: myself and Lifoid
-        users[me.id] = new User(me.id, me.username);
-        users[options.lifoidId] = new User(options.lifoidId, options.lifoidName);
+        users[me.id] = new User(me.id, me.username, options.color);
+        users[options.lifoidId] = new User(options.lifoidId, 
+                                           options.lifoidName,
+                                           options.color);
         lifoid = new LIFOID(me, options.lifoidId);
         var to_now = now();
         console_debug('fetch:' + to_now);
@@ -459,13 +468,16 @@
               for (var i = 0 ; i < data.length; i++) {
                 //if ((get_latest() != undefined) && (data[i].date <= get_latest()))
                 //  continue;
-                var form = new FormData();
-                form.append("text", data[i].payload.text);
                 $.ajax({
-                    url: me.url + "/speech/tts",
+                    url: me.url + '/speech/chatbot/' + options.lifoidId + '/lang/' + me.lang + "/tts",
                     crossDomain: true,
                     type: "POST",
-                    data: form,
+                    data: JSON.stringify({
+                      q: { text: data[i].payload.text },
+                      access_token: user.access_token,
+                      chatbot_id: options.lifoidId,
+                     user: {username: user.username}
+                    }),
                     contentType: false,
                     processData: false,
                     success: function(resp) {
@@ -597,15 +609,20 @@
                 recorder.ondataavailable = function(audio) {
       
                   // wrap audio blob in form data in order to post it to backend
-                  var data = new FormData();
-                  data.append("file", audio);
+                  var form = new FormData();
+                  form.append("file", audio);
+                  form.append("data", JSON.stringify({
+                    access_token: me.access_token,
+                    chatbot_id: options.lifoidId,
+                    user: {username: me.username}
+                  }));
                   
                   // post audio blob to backend
                   $.ajax({
-                    url: me.url + "/speech/stt",
+                    url: me.url + '/speech/chatbot/' + options.lifoidId + '/lang/' + me.lang + "/stt",
                     crossDomain: true,
                     type: "POST",
-                    data: data,
+                    data: form,
                     contentType: false,
                     processData: false,
                     success: function(resp) {
