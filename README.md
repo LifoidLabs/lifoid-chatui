@@ -39,7 +39,7 @@ Update
 
 ```bash
 $ pybabel -v extract -F babel.cfg -o ./lifoid_chatui/translations/messages.pot ./
-$ pybabel update -i ./lifoid_chatui/translations/messages.pot -d ./bot/translations
+$ pybabel update -i ./lifoid_chatui/translations/messages.pot -d ./lifoid_chatui/translations
 ```
 
 Compile

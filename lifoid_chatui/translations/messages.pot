@@ -1,243 +1,51 @@
 # Translations template for PROJECT.
-# Copyright (C) 2017 ORGANIZATION
+# Copyright (C) 2018 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-05 11:34+0900\n"
+"POT-Creation-Date: 2018-03-09 09:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.5.1\n"
+"Generated-By: Babel 2.5.3\n"
 
-#: iambot/www/chatui/templates/expired.html:38
-#: iambot/www/chatui/templates/index.html:81
-msgid "Loading..."
-msgstr ""
-
-#: iambot/www/chatui/templates/expired.html:46
+#: lifoid_chatui/templates/expired.html:42
 msgid "You session has expired. Please login."
 msgstr ""
 
-#: iambot/www/chatui/templates/expired.html:48
+#: lifoid_chatui/templates/expired.html:44
 msgid "Login"
 msgstr ""
 
-#: iambot/www/chatui/templates/index.html:99
+#: lifoid_chatui/templates/index.html:91
+msgid "Loading..."
+msgstr ""
+
+#: lifoid_chatui/templates/index.html:109
 msgid "Chat"
 msgstr ""
 
-#: iambot/www/chatui/templates/index.html:102
-msgid "Quick Start"
+#: lifoid_chatui/templates/index.html:119
+msgid "Languages"
 msgstr ""
 
-#: iambot/www/chatui/templates/index.html:103
-msgid "Help"
-msgstr ""
-
-#: iambot/www/chatui/templates/index.html:141
+#: lifoid_chatui/templates/index.html:156
 msgid "Or enter your message here."
 msgstr ""
 
-#: iambot/www/chatui/templates/index.html:153
-#: iambot/www/chatui/templates/privacy.html:1047
-#: iambot/www/chatui/templates/terms.html:960
+#: lifoid_chatui/templates/index.html:168
 msgid "Terms of Use"
 msgstr ""
 
-#: iambot/www/chatui/templates/index.html:153
-#: iambot/www/chatui/templates/privacy.html:960
-#: iambot/www/chatui/templates/terms.html:1027
+#: lifoid_chatui/templates/index.html:168
 msgid "Privacy Policy"
-msgstr ""
-
-#: iambot/www/chatui/templates/index.html:212
-#, python-format
-msgid ""
-"Hello, my name is %(iambot_name)s. Please have a look at the Chat menu "
-"where you will find all the ways to start quickly the discussion. But "
-"first of all which language would you like to speak with me?"
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:964
-msgid ""
-"<p>Mibot will handle the personal information as follows.</p>\n"
-"<br />\n"
-"<h4>Purpose of the use of Personal Information.</h4>\n"
-"<p>Mibot will collect/use personal information for the following "
-"purposes.</p>\n"
-"<ul>\n"
-"<li>Sending of information on events and service and products.</li>\n"
-"<li>Sending of information on seminars held by Mibot and its "
-"partners.</li>\n"
-"<li>Execution of a contract concluded between Mibot and its "
-"customers.</li>\n"
-"<li>Contacts for business negotiations and meetings with its "
-"customers.</li>\n"
-"<li>Delivery of after-sales service of its products.</li>\n"
-"<li>Execution of business, including system development, operation and "
-"maintenance, entrusted by customers.</li>\n"
-"<li>Delivery of various membership services.</li>\n"
-"<li>Response to various inquiries from a customer.</li>\n"
-"<li>Analysis based on questionnaires to improve products and "
-"services.</li>\n"
-"<li>Provision of personal information to the group company in case of co-"
-"operation with them.</li>\n"
-"</ul>\n"
-"<br />\n"
-"<h4>Provision and Deposit of Personal Information.</h4>\n"
-"<ul>\n"
-"<li>Mibot will not provide or deposit personal information to a third "
-"party, except the following cases.</li>\n"
-"<li>Cases in which the provision of personal information is based on the "
-"prior consent from the person.</li>\n"
-"<li>Cases in which the provision of personal information is based on "
-"laws.</li>\n"
-"<li>Cases in which the provision of personal information is necessary for"
-" the protection of the life, body, or property of an individual and in "
-"which it is difficult to obtain the consent of the person.</li>\n"
-"<li>Cases in which the provision of personal information is specially "
-"necessary for improving public hygiene or promoting the sound growth of "
-"children and in which it is difficult to obtain the consent of the "
-"person.</li>\n"
-"<li>Cases in which the provision of personal information is necessary for"
-" cooperating with a state institution, a local public body, or an "
-"individual or entity entrusted by one in executing the operations "
-"prescribed by laws and in which obtaining the consent of the person might"
-" impede the execution of the operations concerned.</li>\n"
-"<li>Cases in which an entry handling personal information entrust the "
-"handling of personal information in whole or in part within the scope "
-"necessary for the achievement of the Purpose of Use.</li>\n"
-"<li>Case in which personal information is provided as a result of the "
-"take-over of business in a merger or otherwise. When required to do so "
-"for business activities in which Mibot is co-operating with the group "
-"companies or business partners, Mibot may provide such group companies "
-"and business partners with personal information such as a name, workplace"
-" or home addresses, telephone number, fax number, e-mail address, etc. If"
-" this is the case, the personal information will be provided in print or "
-"electronic media. In addition, the person may request us to stop the "
-"provision of the personal information with the group companies.</li>\n"
-"</ul>\n"
-"<br />\n"
-"<h4>Request to Disclose Personal Information.</h4>\n"
-"<p>When a customer herself/himself or representative wants to request to "
-"disclose, correct, or delete her/his personal information, Mibot will "
-"disclose, correct, or delete the personal information within a rational "
-"scope, except the following cases.</p>\n"
-"<ul>\n"
-"<li>Cases in which there is a possibility of damaging the life, body, "
-"property, or other benefits of a person or a third party.</li>\n"
-"<li>Cases in which it is recognized that it may impede the execution of "
-"the operations of Mibot.</li>\n"
-"<li>Cases in which it is violating the law.</li>\n"
-"</ul>\n"
-"<br />\n"
-"<h4>Request to Person.</h4>\n"
-"Please decide whether or not to register the customer's personal "
-"information, according to the intention of the customer herself/himself. "
-"However, please note that some services (including response to inquiries,"
-" etc.) are only available with the registration of the personal "
-"information.</p>\n"
-"<br />\n"
-"<h4>About Usage of Cookies and Web beacons.</h4>\n"
-"<p>Mibot uses cookies and Web beacons (clear GIF) in part of the website "
-"to make it more conveniently to use for person. A person can refuse to "
-"receive a cookie, or can display a warning message when receiving a "
-"cookie by changing the setting of a web browser. For more details, please"
-" see the instructions of a web browser you are using. Moreover, a person "
-"can reject a Web beacon by setting to refuse the receipt of a cookie. "
-"But, in the first case, please note that a person may not be able to use "
-"the all or part of our services provided in the website.</p>\n"
-"<br />\n"
-"<h4>Special Note.</h4>\n"
-"<p>Mibot may revise this document, “Privacy Policy” to improve the "
-"handling of personal information and/or due to the revision of laws or "
-"ordinances, or other rules or regulations.</p>"
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:1014
-#: iambot/www/chatui/templates/terms.html:994
-msgid "Chat with Mibot"
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:1046
-#: iambot/www/chatui/templates/privacy.html:1050
-#: iambot/www/chatui/templates/terms.html:1026
-#: iambot/www/chatui/templates/terms.html:1030
-msgid "Mibot, Inc."
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:1053
-#: iambot/www/chatui/templates/terms.html:1033
-msgid ""
-"Toranomon 30 Mori Bld. 9f, 3-2-2, Toranomon, Minato-ku, Tokyo, 105-0001, "
-"Japan"
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:1056
-#: iambot/www/chatui/templates/terms.html:1036
-msgid "Tel: +81-3-6435-9295"
-msgstr ""
-
-#: iambot/www/chatui/templates/privacy.html:1059
-#: iambot/www/chatui/templates/terms.html:1039
-msgid "Email: <a href=\"mailto:support@mibot.legal\">support@mibot.legal</a>"
-msgstr ""
-
-#: iambot/www/chatui/templates/terms.html:964
-msgid ""
-"<h4>Definition.</h4> \n"
-"<p>In this Terms of Use, the following terms shall have the following "
-"meanings:</p>\n"
-"<p>“Mibot” means mibot inc. </p>\n"
-"<p>“You” means the person accessing/using the Website.</p>\n"
-"<p>“Website” means Mibot’s website including the services and products "
-"provided under such website.</p>\n"
-"<p>“Information” means any and all text, conversation, software, "
-"graphics, photos, logos, in the Website and documents created using the "
-"Website.\n"
-"<p>“IP” means any and all intellectual property rights (e.g. copyright, "
-"patent, trademark) in the Information. </p>\n"
-"<br />\n"
-"<h4>Acceptance.</h4>\n"
-"<p>By using the Website, you accept and agree to be bound by the Terms of"
-" Use. </p>\n"
-"<br />\n"
-"<h4>Information Purpose.</h4>\n"
-"<p>The Website is intended to provide you with useful information in "
-"drafting and reviewing contracts but is not intended to provide you with "
-"legal advices. Mibot recommends that you obtain legal counsel before "
-"using the contracts drafted or reviewed by Mibot. </p>\n"
-"<br />\n"
-"<h4>Intellectual Property. </h4>\n"
-"<p>Any and all IP is owned by Mibot. Mibot authorizes you use the Website"
-" and the Information for your information and personal use only. Except "
-"as expressly provided above, nothing contained herein shall be construed "
-"as conferring any license or right under any IP of Mibot.</p>\n"
-"<br />\n"
-"<h4>No Warranty.</h4>\n"
-"<p>The Information may include any inaccuracies or errors. THESE "
-"DOCUMENTS ARE PROVIDED “AS IS“ WITHOUT WARRANTY OF ANY KIND, EITHER "
-"EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES "
-"OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT"
-" OF ANY THIRD PARTY'S RIGHTS OF ANY KIND. IN NO EVENT, HITACHI EAST JAPAN"
-" SOLUTIONS, LTD. SHALL BE LIABLE FOR ANY SPECIAL, INDIRECT OR "
-"CONSEQUENTIAL DAMAGES WHATSOEVER OR ANY DAMAGES, WHETHER IN CONTRACT, "
-"TORT OR OTHERWISE, ARISING OUT OF OR IN CONNECTION WITH THE USE OF THE "
-"DOCUMENTS HEREIN. </p>\n"
-"<br />\n"
-"<h4>Termination.</h4>\n"
-"<p>Mibot may, at its sole discretion, terminate your access and use of "
-"the Website and the Information.</p>\n"
-"<br />\n"
-"<h4>Amendments.</h4>\n"
-"<p>The Terms of Use are subject to change at any time without notice.</p>"
 msgstr ""
 
