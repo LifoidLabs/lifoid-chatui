@@ -106,10 +106,22 @@
 				<ul class="nav navbar-nav navbar-left">
 				  <li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="fa fa-wechat fa-2x"></i> <span class="hidden-xs">{{ _('Chat') }}</span> <b class="caret"></b>
+						<span class="hidden-xs">{{ _('Chat') }}</span> <b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu pull-right">
-						<li><a id="help" href="javascript:;">{{ _('Help') }}</a></li>
+						{% for item in chat_menu %}
+						<li><a class="chatitem" href="javascript:;">{{ item }}</a></li>
+						{% endfor %}
+					</ul>
+				  </li>
+				  <li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="hidden-xs">{{ _('Languages') }}</span> <b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu pull-right">
+						{% for language in languages %}
+							<li><a href="{{ url_for('chatui.chatbot_lang', chatbot_id=lifoid_id, lang_code=language) }}">{{ language }}</a></li>
+						{% endfor %}
 					</ul>
 				  </li>
 				  {% if auth %}
@@ -186,7 +198,7 @@
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/editable-table/jquery-editabletable.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/table-to-json/jquery.tabletojson.min.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/mediastreamrecorder/MediaStreamRecorder.js') }}"></script>
-	<script src="{{ url_for('chatui.static', filename='assets/plugins/lifoid/jquery-lifoid-chat.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/lifoid/jquery-lifoid-chat.min.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/moment.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->

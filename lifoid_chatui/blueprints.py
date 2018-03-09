@@ -77,22 +77,22 @@ def chatbot_lang(chatbot_id, lang_code):
     Website root
     """
     logger.debug('Blueprint index invoked')
+    logger.debug('Settings dev_auth: {}'.format(settings.dev_auth))
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
     refresh()
-    cognito_auth = True
     bot_conf = get_bot(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
-    if settings.dev_auth == 'yes':
-        cognito_auth = False
     try:
         return render_template(
             'index.html',
+            chat_menu=bot_conf['chatui']['chat_menu'],
+            languages=bot_conf['languages'],
             color=bot_conf['chatui']['color'],
             color_active=bot_conf['chatui']['color_active'],
             lang=lang_code,
             path_url=settings.chatui.path_url,
-            auth=cognito_auth,
+            auth=settings.dev_auth == 'no',
             company_name=bot_conf['chatui']['company_name'],
             lifoid_id=chatbot_id,
             lifoid_name=bot_conf['chatui']['service_name'],
@@ -113,6 +113,8 @@ def expired(chatbot_id, lang_code):
     bot_conf = get_bot(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
+    app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
+    refresh()
     return render_template(
         'expired.html',
         lifoid_name=bot_conf['chatui']['service_name'],
@@ -133,6 +135,8 @@ def terms(chatbot_id, lang_code):
     bot_conf = get_bot(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
+    app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
+    refresh()
     return render_template(
         'terms.html',
         lifoid_name=bot_conf['chatui']['service_name'],
@@ -146,6 +150,11 @@ def privacy(chatbot_id, lang_code):
     """
     Privacy Policy
     """
+    bot_conf = get_bot(chatbot_id)
+    if bot_conf is None:
+        return make_response('Unknown Bot', 404)
+    app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
+    refresh()
     return render_template(
         'privacy.html',
         lang=lang_code,

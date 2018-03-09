@@ -516,22 +516,10 @@
             console_error
           );
         };
-        /*
-        document.getElementById("quickStart").addEventListener("click", function() {
+        $('.chatitem').click(function() {
+          console.log('chatitem');
           send_message(lifoid, me, $(this).html());
         });
-        */
-        document.getElementById("help").addEventListener("click", function() {
-          send_message(lifoid, me, $(this).html());
-        });
-        /*
-        document.getElementById("english").addEventListener("click", function() {
-          send_message(lifoid, me, $(this).html());
-        });
-        document.getElementById("japanese").addEventListener("click", function() {
-          send_message(lifoid, me, $(this).html());
-        });
-        */
         $chat.on('click', '.lifoid-qr', function(){
           valueSelected = $(this).attr('data-value');
           this.parentNode.remove();
