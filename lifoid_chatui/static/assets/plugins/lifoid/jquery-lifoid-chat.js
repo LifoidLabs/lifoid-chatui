@@ -604,7 +604,8 @@
                     chatbot_id: options.lifoidId,
                     user: {username: me.username}
                   }));
-                  
+                  // Stop recorder
+                  this.stop();
                   // post audio blob to backend
                   $.ajax({
                     url: me.url + '/speech/chatbot/' + options.lifoidId + '/lang/' + me.lang + "/stt",
