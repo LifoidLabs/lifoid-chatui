@@ -436,7 +436,7 @@
         self.color = color;
 
         self.chat = function(content, date) {
-          new Message('message', self.username, date, content,
+          return new Message('message', self.username, date, content,
                       self.id == options.lifoidId, self.color);
         };
         return self;
@@ -468,48 +468,54 @@
               for (var i = 0 ; i < data.length; i++) {
                 //if ((get_latest() != undefined) && (data[i].date <= get_latest()))
                 //  continue;
-                $.ajax({
-                    url: me.url + '/speech/chatbot/' + options.lifoidId + '/lang/' + me.lang + "/tts",
-                    crossDomain: true,
-                    type: "POST",
-                    data: JSON.stringify({
-                      q: { text: data[i].payload.text },
-                      access_token: user.access_token,
-                      chatbot_id: options.lifoidId,
-                     user: {username: user.username}
-                    }),
-                    contentType: false,
-                    processData: false,
-                    success: function(resp) {
-                      function _base64ToArrayBuffer(base64) {
-                          var binary_string =  window.atob(base64);
-                          var len = binary_string.length;
-                          var bytes = new Uint8Array( len );
-                          for (var i = 0; i < len; i++)        {
-                              bytes[i] = binary_string.charCodeAt(i);
-                          }
-                          return bytes;
-                      }
-
-                      var audioElement = document.createElement('audio');
-                      audioElement.autoplay = true;
-                      var uInt8Array = _base64ToArrayBuffer(resp.audio);
-                      var arrayBuffer = uInt8Array.buffer;
-                      var blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
-                      var url = URL.createObjectURL(blob);
-
-                      audioElement.src = url;
-
-                      audioElement.addEventListener('ended', function () {
-                        audioElement.currentTime = 0;
-                        if (typeof callback === 'function') {
-                          console.log('audio playback ended');
+                var mess = users[data[i].from_user].chat(data[i].payload, data[i].date);
+                if (i == (data.length - 1)) {
+                  $.ajax({
+                      url: me.url + '/speech/chatbot/' + options.lifoidId + '/lang/' + me.lang + "/tts",
+                      crossDomain: true,
+                      type: "POST",
+                      data: JSON.stringify({
+                        q: { text: data[i].payload.text },
+                        access_token: user.access_token,
+                        chatbot_id: options.lifoidId,
+                       user: {username: user.username}
+                      }),
+                      contentType: false,
+                      processData: false,
+                      success: function(resp) {
+                        function _base64ToArrayBuffer(base64) {
+                            var binary_string =  window.atob(base64);
+                            var len = binary_string.length;
+                            var bytes = new Uint8Array( len );
+                            for (var i = 0; i < len; i++)        {
+                                bytes[i] = binary_string.charCodeAt(i);
+                            }
+                            return bytes;
                         }
-                      });
-                      audioElement.play();
-                    }
-                  });
-                users[data[i].from_user].chat(data[i].payload, data[i].date);
+
+                        var audioElement = document.createElement('audio');
+                        //audioElement.autoplay = true;
+                        audioElement.controls = true;
+                        audioElement.autoplay = true;
+                        var uInt8Array = _base64ToArrayBuffer(resp.audio);
+                        var arrayBuffer = uInt8Array.buffer;
+                        var blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
+                        var url = URL.createObjectURL(blob);
+
+                        audioElement.src = url;
+
+                        audioElement.addEventListener('ended', function () {
+                          audioElement.currentTime = 0;
+                          if (typeof callback === 'function') {
+                            console.log('audio playback ended');
+                          }
+                        });
+                        $chat.children().last().find('.message').append(audioElement);
+                        console.log(audioElement);
+                        //audioElement.play();
+                      }
+                    });
+                }
               }
               $("html, body").animate({ scrollTop: $(document).height() }, 100);
             },
