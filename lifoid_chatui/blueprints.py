@@ -18,7 +18,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 from google.oauth2 import service_account
 from lifoid.config import settings
-from lifoid.bot import get_bot
+from lifoid.agent.repository import get_agent_conf
 from lifoid.auth import get_user
 
 logger = ServiceLogger()
@@ -45,7 +45,7 @@ def root():
     Delivers Lifoid web Chat UI.
     """
     default_chatbot_id = settings.lifoid_id
-    bot_conf = get_bot(default_chatbot_id)
+    bot_conf = get_agent_conf(default_chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
@@ -63,7 +63,7 @@ def root_lang(lang_code):
 
 @chatui.route('/chatbot/<chatbot_id>')
 def chatbot(chatbot_id):
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
@@ -80,7 +80,7 @@ def chatbot_lang(chatbot_id, lang_code):
     logger.debug('Settings dev_auth: {}'.format(settings.dev_auth))
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
     refresh()
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     try:
@@ -110,7 +110,7 @@ def expired(chatbot_id, lang_code):
     """
     Authenticated session has expired
     """
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -132,7 +132,7 @@ def terms(chatbot_id, lang_code):
     """
     Terms of Use
     """
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -150,7 +150,7 @@ def privacy(chatbot_id, lang_code):
     """
     Privacy Policy
     """
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -170,7 +170,7 @@ def synthesis(chatbot_id, lang_code):
         abort(403)
     text = data['q']['text']
     voice = request.form.get('voice', settings.chatui.voice)
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     # For each block, invoke Polly API, which will transform text into audio
@@ -205,7 +205,7 @@ def reco(chatbot_id, lang_code):
     if user is None:
         abort(403)
     audio = request.files["file"].read()
-    bot_conf = get_bot(chatbot_id)
+    bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     GOOGLE_CREDENTIALS = {
