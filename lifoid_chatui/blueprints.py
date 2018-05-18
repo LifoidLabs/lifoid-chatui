@@ -18,7 +18,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 from google.oauth2 import service_account
 from lifoid.config import settings
-from lifoid.agent.repository import get_agent_conf
+from lifoid_agent.repository import get_agent_conf
 from lifoid.auth import get_user
 
 logger = ServiceLogger()
