@@ -1,12 +1,11 @@
-# -*- coding: utf8 -*-
 """
 Flask server application for Lifoid Web Chat UI
 """
 import os
 import base64
-import boto3
 import json
 from contextlib import closing
+import boto3
 from flask import (Blueprint, render_template, request, abort,
                    redirect, url_for, jsonify, make_response)
 from flask import current_app as app
@@ -18,8 +17,8 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 from google.oauth2 import service_account
 from lifoid.config import settings
-from lifoid_agent.repository import get_agent_conf
 from lifoid.auth import get_user
+from lifoid_agent.repository import get_agent_conf
 
 logger = ServiceLogger()
 CHATUI_PATH = os.path.abspath(os.path.dirname(__file__))
@@ -39,7 +38,7 @@ def get_lang(bot_conf):
     return lang
 
 
-@chatui.route('/')
+@chatui.route('/', methods=['GET'])
 def root():
     """
     Delivers Lifoid web Chat UI.
@@ -53,7 +52,7 @@ def root():
                             chatbot_id=default_chatbot_id, lang_code=lang))
 
 
-@chatui.route('/<lang_code>')
+@chatui.route('/<lang_code>', methods=['GET'])
 def root_lang(lang_code):
     """
     Website root
@@ -61,7 +60,7 @@ def root_lang(lang_code):
     return chatbot_lang(settings.lifoid_id, lang_code)
 
 
-@chatui.route('/chatbot/<chatbot_id>')
+@chatui.route('/chatbot/<chatbot_id>', methods=['GET'])
 def chatbot(chatbot_id):
     bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
@@ -71,18 +70,18 @@ def chatbot(chatbot_id):
                             chatbot_id=chatbot_id, lang_code=lang))
 
 
-@chatui.route('/chatbot/<chatbot_id>/lang/<lang_code>')
+@chatui.route('/chatbot/<chatbot_id>/lang/<lang_code>', methods=['GET'])
 def chatbot_lang(chatbot_id, lang_code):
     """
-    Website root
+    website root
     """
-    logger.debug('Blueprint index invoked')
-    logger.debug('Settings dev_auth: {}'.format(settings.dev_auth))
-    app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
+    logger.debug('blueprint index invoked')
+    logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
+    app.config['babel_default_locale'] = lang_code.replace('-', '_')
     refresh()
     bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
-        return make_response('Unknown Bot', 404)
+        return make_response('unknown bot', 404)
     try:
         return render_template(
             'index.html',
@@ -102,10 +101,10 @@ def chatbot_lang(chatbot_id, lang_code):
             cognito_redirecturisignout=bot_conf['auth']['url_signout'],
         )
     except UnknownLocaleError:
-        return make_response('Not supported locale', 404)
+        return make_response('not supported locale', 404)
 
 
-@chatui.route('/expired/<chatbot_id>/lang/<lang_code>')
+@chatui.route('/expired/<chatbot_id>/lang/<lang_code>', methods=['GET'])
 def expired(chatbot_id, lang_code):
     """
     Authenticated session has expired
@@ -127,7 +126,7 @@ def expired(chatbot_id, lang_code):
     )
 
 
-@chatui.route('/terms/<chatbot_id>/lang/<lang_code>')
+@chatui.route('/terms/<chatbot_id>/lang/<lang_code>', methods=['GET'])
 def terms(chatbot_id, lang_code):
     """
     Terms of Use
@@ -145,7 +144,7 @@ def terms(chatbot_id, lang_code):
     )
 
 
-@chatui.route('/privacy/<chatbot_id>/lang/<lang_code>')
+@chatui.route('/privacy/<chatbot_id>/lang/<lang_code>', methods=['GET'])
 def privacy(chatbot_id, lang_code):
     """
     Privacy Policy
@@ -238,3 +237,48 @@ def reco(chatbot_id, lang_code):
             })
         output['results'].append(item)
     return jsonify(output)
+
+
+@chatui.route('/chatbot/<chatbot_id>/otqr/<token>', methods=['GET'])
+def otqr(chatbot_id, token):
+    bot_conf = get_agent_conf(chatbot_id)
+    if bot_conf is None:
+        return make_response('Unknown Bot', 404)
+    lang = get_lang(bot_conf)
+    return redirect(url_for('chatui.otqr_lang',
+                            chatbot_id=chatbot_id, token=token,
+                            lang_code=lang))
+
+
+@chatui.route('/chatbot/<chatbot_id>/otqr/<token>/lang/<lang_code>', methods=['GET'])
+def otqr_lang(chatbot_id, token, lang_code):
+    logger.debug('blueprint otqr_lang invoked')
+    logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
+    app.config['babel_default_locale'] = lang_code.replace('-', '_')
+    refresh()
+    bot_conf = get_agent_conf(chatbot_id)
+    if bot_conf is None:
+        return make_response('unknown bot', 404)
+    try:
+        return render_template(
+            'index.html',
+            chat_menu=bot_conf['chatui']['chat_menu'],
+            languages=bot_conf['languages'],
+            color=bot_conf['chatui']['color'],
+            color_active=bot_conf['chatui']['color_active'],
+            lang=lang_code,
+            path_url=settings.chatui.path_url,
+            auth=settings.dev_auth == 'no',
+            company_name=bot_conf['chatui']['company_name'],
+            lifoid_id=chatbot_id,
+            lifoid_name=bot_conf['chatui']['service_name'],
+            cognito_clientid=bot_conf['auth']['client_id'],
+            cognito_appwebdomain=bot_conf['auth']['web_domain'],
+            cognito_redirecturisignin=bot_conf['auth']['url_signin'],
+            cognito_redirecturisignout=bot_conf['auth']['url_signout'],
+            user_id=token,
+            username=token,
+            access_token=token
+        )
+    except UnknownLocaleError:
+        return make_response('not supported locale', 404)

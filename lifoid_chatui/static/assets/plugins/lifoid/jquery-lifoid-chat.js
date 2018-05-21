@@ -42,9 +42,9 @@
         return callback({
           lang: options.lang,
           url: options.url,
-          id: 'me',
-          username: 'me',
-          access_token: 'access_token'
+          id: options.user_id,
+          username: options.username,
+          access_token: options.access_token
         })
       }
       session = auth(options.authData);

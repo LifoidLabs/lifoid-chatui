@@ -198,7 +198,7 @@
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/editable-table/jquery-editabletable.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/table-to-json/jquery.tabletojson.min.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/mediastreamrecorder/MediaStreamRecorder.js') }}"></script>
-	<script src="{{ url_for('chatui.static', filename='assets/plugins/lifoid/jquery-lifoid-chat.min.js') }}"></script>
+	<script src="{{ url_for('chatui.static', filename='assets/plugins/lifoid/jquery-lifoid-chat.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/moment.js') }}"></script>
 	<script src="{{ url_for('chatui.static', filename='assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
@@ -222,7 +222,10 @@
       url: '{{ path_url }}',
       textFormId: 'lifoid-form',
       expiredUrl: '{{ url_for("chatui.expired", chatbot_id=lifoid_id,  lang_code=lang) }}',
-      lang: '{{ lang }}'
+      lang: '{{ lang }}',
+      user_id: '{{ user_id }}',
+      username: '{{ username }}',
+      access_token: '{{ access_token }}'
     };
     App.init(options, $('#target'));    
   });
