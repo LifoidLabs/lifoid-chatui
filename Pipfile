@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"b638f0d" = {path = "./../lifoid", editable = true}
+google-cloud-speech = "*"
+"877a0ba" = {path = "./../lifoid-agent", editable = true}
+
+[dev-packages]
+pylint = "*"
+"autopep8" = "*"
+
+[requires]
+python_version = "3.6"
