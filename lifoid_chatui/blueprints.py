@@ -239,8 +239,8 @@ def reco(chatbot_id, lang_code):
     return jsonify(output)
 
 
-@chatui.route('/chatbot/<chatbot_id>/otqr/<token>', methods=['GET'])
-def otqr(chatbot_id, token):
+@chatui.route('/chatbot/<chatbot_id>/token/<token>', methods=['GET'])
+def token(chatbot_id, token):
     bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
@@ -250,8 +250,8 @@ def otqr(chatbot_id, token):
                             lang_code=lang))
 
 
-@chatui.route('/chatbot/<chatbot_id>/otqr/<token>/lang/<lang_code>', methods=['GET'])
-def otqr_lang(chatbot_id, token, lang_code):
+@chatui.route('/chatbot/<chatbot_id>/token/<token>/lang/<lang_code>', methods=['GET'])
+def token_lang(chatbot_id, token, lang_code):
     logger.debug('blueprint otqr_lang invoked')
     logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
     app.config['babel_default_locale'] = lang_code.replace('-', '_')
