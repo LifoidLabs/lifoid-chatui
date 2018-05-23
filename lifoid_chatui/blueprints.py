@@ -91,7 +91,7 @@ def chatbot_lang(chatbot_id, lang_code):
             color_active=bot_conf['chatui']['color_active'],
             lang=lang_code,
             path_url=settings.chatui.path_url,
-            auth=settings.dev_auth == 'no',
+            auth=settings.chatui.login == 'yes',
             company_name=bot_conf['chatui']['company_name'],
             lifoid_id=chatbot_id,
             lifoid_name=bot_conf['chatui']['service_name'],
@@ -99,6 +99,9 @@ def chatbot_lang(chatbot_id, lang_code):
             cognito_appwebdomain=bot_conf['auth']['web_domain'],
             cognito_redirecturisignin=bot_conf['auth']['url_signin'],
             cognito_redirecturisignout=bot_conf['auth']['url_signout'],
+            user_id='test',
+            username='test',
+            access_token='token'
         )
     except UnknownLocaleError:
         return make_response('not supported locale', 404)
@@ -240,18 +243,18 @@ def reco(chatbot_id, lang_code):
 
 
 @chatui.route('/chatbot/<chatbot_id>/token/<token>', methods=['GET'])
-def token(chatbot_id, token):
+def chatbot_token(chatbot_id, token):
     bot_conf = get_agent_conf(chatbot_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
-    return redirect(url_for('chatui.otqr_lang',
+    return redirect(url_for('chatui.chatbot_token_lang',
                             chatbot_id=chatbot_id, token=token,
                             lang_code=lang))
 
 
 @chatui.route('/chatbot/<chatbot_id>/token/<token>/lang/<lang_code>', methods=['GET'])
-def token_lang(chatbot_id, token, lang_code):
+def chatbot_token_lang(chatbot_id, token, lang_code):
     logger.debug('blueprint otqr_lang invoked')
     logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
     app.config['babel_default_locale'] = lang_code.replace('-', '_')
@@ -268,14 +271,14 @@ def token_lang(chatbot_id, token, lang_code):
             color_active=bot_conf['chatui']['color_active'],
             lang=lang_code,
             path_url=settings.chatui.path_url,
-            auth=settings.dev_auth == 'no',
+            auth=settings.chatui.login == 'yes',
             company_name=bot_conf['chatui']['company_name'],
             lifoid_id=chatbot_id,
             lifoid_name=bot_conf['chatui']['service_name'],
-            cognito_clientid=bot_conf['auth']['client_id'],
-            cognito_appwebdomain=bot_conf['auth']['web_domain'],
-            cognito_redirecturisignin=bot_conf['auth']['url_signin'],
-            cognito_redirecturisignout=bot_conf['auth']['url_signout'],
+            cognito_clientid=bot_conf['auth'].get('client_id', ''),
+            cognito_appwebdomain=bot_conf['auth'].get('web_domain', ''),
+            cognito_redirecturisignin=bot_conf['auth'].get('url_signin', ''),
+            cognito_redirecturisignout=bot_conf['auth'].get('url_signout', ''),
             user_id=token,
             username=token,
             access_token=token

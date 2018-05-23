@@ -10,6 +10,7 @@ class ChatUIConfiguration(Configuration):
     """
     Configuration for the database server
     """
+    login = environ_setting('LOGIN', 'no', required=False)
     path_url = environ_setting('PATH_URL', '', required=False)
     company_name = environ_setting('COMPANY_NAME', 'Company', required=False)
     voice = environ_setting('SPEECH_VOICE', 'Matthew', required=False)
