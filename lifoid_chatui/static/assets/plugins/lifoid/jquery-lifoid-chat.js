@@ -114,7 +114,7 @@
             crossDomain: true,
             url: self.url + '/messages',
             data: JSON.stringify({
-              chatbot_id: self.lifoid_id,
+              lifoid_id: self.lifoid_id,
               lang: self.lang,
               access_token: self.access_token,
               to_date: to_date,
@@ -147,7 +147,7 @@
                 crossDomain: true,
                 url: self.url + '/messages',
                 data: JSON.stringify({
-                  chatbot_id: self.lifoid_id,
+                  lifoid_id: self.lifoid_id,
                   access_token: self.access_token,
                   from_date: from_date,
                   user: {username: self.username}
@@ -461,7 +461,7 @@
               q: { text: text, attachments: attachments },
               access_token: user.access_token,
               user: {username: user.username},
-              chatbot_id: options.lifoidId,
+              lifoid_id: options.lifoidId,
               lang: me.lang
             },
             function(data) {
@@ -477,7 +477,7 @@
                       data: JSON.stringify({
                         q: { text: data[i].payload.text },
                         access_token: user.access_token,
-                        chatbot_id: options.lifoidId,
+                        lifioid_id: options.lifoidId,
                        user: {username: user.username}
                       }),
                       contentType: false,
@@ -607,7 +607,7 @@
                   form.append("file", audio);
                   form.append("data", JSON.stringify({
                     access_token: me.access_token,
-                    chatbot_id: options.lifoidId,
+                    lifoid_id: options.lifoidId,
                     user: {username: me.username}
                   }));
                   // Stop recorder

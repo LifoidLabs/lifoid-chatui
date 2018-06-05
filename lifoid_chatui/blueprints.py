@@ -43,13 +43,13 @@ def root():
     """
     Delivers Lifoid web Chat UI.
     """
-    default_chatbot_id = settings.lifoid_id
-    bot_conf = get_agent_conf(default_chatbot_id)
+    default_lifoid_id = settings.lifoid_id
+    bot_conf = get_agent_conf(default_lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
     return redirect(url_for('chatui.chatbot_lang',
-                            chatbot_id=default_chatbot_id, lang_code=lang))
+                            lifoid_id=default_lifoid_id, lang_code=lang))
 
 
 @chatui.route('/<lang_code>', methods=['GET'])
@@ -60,18 +60,18 @@ def root_lang(lang_code):
     return chatbot_lang(settings.lifoid_id, lang_code)
 
 
-@chatui.route('/chatbot/<chatbot_id>', methods=['GET'])
-def chatbot(chatbot_id):
-    bot_conf = get_agent_conf(chatbot_id)
+@chatui.route('/chatbot/<lifoid_id>', methods=['GET'])
+def chatbot(lifoid_id):
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
     return redirect(url_for('chatui.chatbot_lang',
-                            chatbot_id=chatbot_id, lang_code=lang))
+                            lifoid_id=lifoid_id, lang_code=lang))
 
 
-@chatui.route('/chatbot/<chatbot_id>/lang/<lang_code>', methods=['GET'])
-def chatbot_lang(chatbot_id, lang_code):
+@chatui.route('/chatbot/<lifoid_id>/lang/<lang_code>', methods=['GET'])
+def chatbot_lang(lifoid_id, lang_code):
     """
     website root
     """
@@ -79,7 +79,7 @@ def chatbot_lang(chatbot_id, lang_code):
     logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
     app.config['babel_default_locale'] = lang_code.replace('-', '_')
     refresh()
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('unknown bot', 404)
     try:
@@ -93,7 +93,7 @@ def chatbot_lang(chatbot_id, lang_code):
             path_url=settings.chatui.path_url,
             auth=settings.chatui.login == 'yes',
             company_name=bot_conf['chatui']['company_name'],
-            lifoid_id=chatbot_id,
+            lifoid_id=lifoid_id,
             lifoid_name=bot_conf['chatui']['service_name'],
             cognito_clientid=bot_conf['auth']['client_id'],
             cognito_appwebdomain=bot_conf['auth']['web_domain'],
@@ -107,12 +107,12 @@ def chatbot_lang(chatbot_id, lang_code):
         return make_response('not supported locale', 404)
 
 
-@chatui.route('/expired/<chatbot_id>/lang/<lang_code>', methods=['GET'])
-def expired(chatbot_id, lang_code):
+@chatui.route('/expired/<lifoid_id>/lang/<lang_code>', methods=['GET'])
+def expired(lifoid_id, lang_code):
     """
     Authenticated session has expired
     """
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -121,7 +121,7 @@ def expired(chatbot_id, lang_code):
         'expired.html',
         lifoid_name=bot_conf['chatui']['service_name'],
         lang=lang_code,
-        lifoid_id=chatbot_id,
+        lifoid_id=lifoid_id,
         cognito_clientid=bot_conf['auth']['client_id'],
         cognito_appwebdomain=bot_conf['auth']['web_domain'],
         cognito_redirecturisignin=bot_conf['auth']['url_signin'],
@@ -129,12 +129,12 @@ def expired(chatbot_id, lang_code):
     )
 
 
-@chatui.route('/terms/<chatbot_id>/lang/<lang_code>', methods=['GET'])
-def terms(chatbot_id, lang_code):
+@chatui.route('/terms/<lifoid_id>/lang/<lang_code>', methods=['GET'])
+def terms(lifoid_id, lang_code):
     """
     Terms of Use
     """
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -143,16 +143,16 @@ def terms(chatbot_id, lang_code):
         'terms.html',
         lifoid_name=bot_conf['chatui']['service_name'],
         lang=lang_code,
-        lifoid_id=chatbot_id,
+        lifoid_id=lifoid_id,
     )
 
 
-@chatui.route('/privacy/<chatbot_id>/lang/<lang_code>', methods=['GET'])
-def privacy(chatbot_id, lang_code):
+@chatui.route('/privacy/<lifoid_id>/lang/<lang_code>', methods=['GET'])
+def privacy(lifoid_id, lang_code):
     """
     Privacy Policy
     """
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     app.config['BABEL_DEFAULT_LOCALE'] = lang_code.replace('-', '_')
@@ -160,19 +160,19 @@ def privacy(chatbot_id, lang_code):
     return render_template(
         'privacy.html',
         lang=lang_code,
-        lifoid_id=chatbot_id,
+        lifoid_id=lifoid_id,
     )
 
 
-@speech.route("/chatbot/<chatbot_id>/lang/<lang_code>/tts", methods=["POST"])
-def synthesis(chatbot_id, lang_code):
+@speech.route("/chatbot/<lifoid_id>/lang/<lang_code>/tts", methods=["POST"])
+def synthesis(lifoid_id, lang_code):
     data = json.loads(request.get_data())
     user = get_user(data)
     if user is None:
         abort(403)
     text = data['q']['text']
     voice = request.form.get('voice', settings.chatui.voice)
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     # For each block, invoke Polly API, which will transform text into audio
@@ -198,8 +198,8 @@ def synthesis(chatbot_id, lang_code):
         return make_response('OK', 200)
 
 
-@speech.route("/chatbot/<chatbot_id>/lang/<lang_code>/stt", methods=["POST"])
-def reco(chatbot_id, lang_code):
+@speech.route("/chatbot/<lifoid_id>/lang/<lang_code>/stt", methods=["POST"])
+def reco(lifoid_id, lang_code):
     if 'data' not in request.form:
         abort(404)
     data = json.loads(request.form['data'])
@@ -207,7 +207,7 @@ def reco(chatbot_id, lang_code):
     if user is None:
         abort(403)
     audio = request.files["file"].read()
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     GOOGLE_CREDENTIALS = {
@@ -242,24 +242,24 @@ def reco(chatbot_id, lang_code):
     return jsonify(output)
 
 
-@chatui.route('/chatbot/<chatbot_id>/token/<token>', methods=['GET'])
-def chatbot_token(chatbot_id, token):
-    bot_conf = get_agent_conf(chatbot_id)
+@chatui.route('/chatbot/<lifoid_id>/token/<token>', methods=['GET'])
+def chatbot_token(lifoid_id, token):
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('Unknown Bot', 404)
     lang = get_lang(bot_conf)
     return redirect(url_for('chatui.chatbot_token_lang',
-                            chatbot_id=chatbot_id, token=token,
+                            lifoid_id=lifoid_id, token=token,
                             lang_code=lang))
 
 
-@chatui.route('/chatbot/<chatbot_id>/token/<token>/lang/<lang_code>', methods=['GET'])
-def chatbot_token_lang(chatbot_id, token, lang_code):
+@chatui.route('/chatbot/<lifoid_id>/token/<token>/lang/<lang_code>', methods=['GET'])
+def chatbot_token_lang(lifoid_id, token, lang_code):
     logger.debug('blueprint otqr_lang invoked')
     logger.debug('settings dev_auth: {}'.format(settings.dev_auth))
     app.config['babel_default_locale'] = lang_code.replace('-', '_')
     refresh()
-    bot_conf = get_agent_conf(chatbot_id)
+    bot_conf = get_agent_conf(lifoid_id)
     if bot_conf is None:
         return make_response('unknown bot', 404)
     try:
@@ -273,7 +273,7 @@ def chatbot_token_lang(chatbot_id, token, lang_code):
             path_url=settings.chatui.path_url,
             auth=settings.chatui.login == 'yes',
             company_name=bot_conf['chatui']['company_name'],
-            lifoid_id=chatbot_id,
+            lifoid_id=lifoid_id,
             lifoid_name=bot_conf['chatui']['service_name'],
             cognito_clientid=bot_conf['auth'].get('client_id', ''),
             cognito_appwebdomain=bot_conf['auth'].get('web_domain', ''),
