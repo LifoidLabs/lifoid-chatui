@@ -495,7 +495,7 @@
 
                         var audioElement = document.createElement('audio');
                         //audioElement.autoplay = true;
-                        audioElement.controls = true;
+                       // audioElement.controls = true;
                         audioElement.autoplay = true;
                         var uInt8Array = _base64ToArrayBuffer(resp.audio);
                         var arrayBuffer = uInt8Array.buffer;
