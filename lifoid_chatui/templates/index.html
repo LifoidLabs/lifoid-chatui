@@ -74,14 +74,20 @@
 	    border-radius: 4px;
 	}
 	.btn.btn-primary {
-       background: #{{ color }};
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		outline: none;
+        background: #{{ color }};
    	}
    	.btn.btn-primary.active,
 	.btn.btn-primary:hover,
 	.btn.btn-primary:focus,
-	.btn.btn-primary:active, 
 	.open > .dropdown-toggle.btn-primary {
-	    background: #{{ color_active }};
+		border: none;
+ 		-webkit-box-shadow: none;
+ 		box-shadow: none;
+		outline: none;
+		background: #{{ color_active }};
 	}
 	</style>
 </head>
@@ -99,7 +105,7 @@
 			<div class="container-fluid">
 				<!-- begin mobile sidebar expand / collapse button -->
 				<div class="navbar-header">
-					<a href="{{ url_for('chatui.chatbot_lang', chatbot_id=lifoid_id, lang_code=lang) }}" class="navbar-brand">{{ lifoid_name }}</a>
+<a href="{{ url_for('chatui.chatbot_lang', lifoid_id=lifoid_id, lang_code=lang) }}" class="navbar-brand">{{ lifoid_name }}</a>
 				</div>
 				<!-- end mobile sidebar expand / collapse button -->
 				<!-- begin navbar-left -->
@@ -120,7 +126,7 @@
 					</a>
 					<ul class="dropdown-menu pull-right">
 						{% for language in languages %}
-							<li><a href="{{ url_for('chatui.chatbot_lang', chatbot_id=lifoid_id, lang_code=language) }}">{{ language }}</a></li>
+							<li><a href="{{ url_for('chatui.chatbot_lang', lifoid_id=lifoid_id, lang_code=language) }}">{{ language }}</a></li>
 						{% endfor %}
 					</ul>
 				  </li>
@@ -165,7 +171,7 @@
 				</div>		
 				<div class="row justify-content-center" style="margin-top:15px;">
 					<div class="col-lg-6">
-						<a href="{{ url_for('chatui.terms', chatbot_id=lifoid_id, lang_code=lang) }}">{{ _('Terms of Use') }}</a>. <a href="{{ url_for('chatui.privacy', chatbot_id=lifoid_id, lang_code=lang) }}">{{ _('Privacy Policy') }}</a>
+						<a href="{{ url_for('chatui.terms', lifoid_id=lifoid_id, lang_code=lang) }}">{{ _('Terms of Use') }}</a>. <a href="{{ url_for('chatui.privacy', lifoid_id=lifoid_id, lang_code=lang) }}">{{ _('Privacy Policy') }}</a>
           </div>				
         </div>
 			</div>
@@ -221,7 +227,7 @@
       lifoidAvatar: '{{ url_for("chatui.static", filename="assets/img/mibot.png") }}',
       url: '{{ path_url }}',
       textFormId: 'lifoid-form',
-      expiredUrl: '{{ url_for("chatui.expired", chatbot_id=lifoid_id,  lang_code=lang) }}',
+      expiredUrl: '{{ url_for("chatui.expired", lifoid_id=lifoid_id,  lang_code=lang) }}',
       lang: '{{ lang }}',
       user_id: '{{ user_id }}',
       username: '{{ username }}',
