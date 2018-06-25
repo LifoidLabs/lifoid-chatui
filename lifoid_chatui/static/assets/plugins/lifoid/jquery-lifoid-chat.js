@@ -477,7 +477,7 @@
                       data: JSON.stringify({
                         q: { text: data[i].payload.text },
                         access_token: user.access_token,
-                        lifioid_id: options.lifoidId,
+                        lifoid_id: options.lifoidId,
                        user: {username: user.username}
                       }),
                       contentType: false,
