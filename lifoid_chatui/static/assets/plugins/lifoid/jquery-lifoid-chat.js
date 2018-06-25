@@ -412,7 +412,7 @@
               } 
             }
           }
-          if (username.indexOf('Google') != -1) {
+          if (username.indexOf('Google') != -1 || username.length == 32) {
             self.$tpl.find('.name').text('me').html(); // escape html
           }
           else
@@ -422,6 +422,7 @@
           self.$tpl.prop('date', date);
         }
         $chat.append(self.$tpl);
+        $chat.getNiceScroll().resize();
         generateAvatars(color);
       };
 
