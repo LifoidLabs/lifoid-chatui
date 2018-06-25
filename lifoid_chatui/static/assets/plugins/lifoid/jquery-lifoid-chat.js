@@ -422,7 +422,6 @@
           self.$tpl.prop('date', date);
         }
         $chat.append(self.$tpl);
-        $chat.getNiceScroll().resize();
         generateAvatars(color);
       };
 
