@@ -91,7 +91,7 @@
 			-webkit-box-shadow: none;
 			box-shadow: none;
 			outline: none;
-			background: #{{ color }};
+			background: {{ color }};
 		}
 
 		.btn.btn-primary.active,
@@ -102,7 +102,7 @@
 			-webkit-box-shadow: none;
 			box-shadow: none;
 			outline: none;
-			background: #{{ color_active }};
+			background: {{ color_active }};
 		}
 	</style>
 </head>
@@ -123,7 +123,9 @@
 				<div class="container-fluid">
 					<!-- begin mobile sidebar expand / collapse button -->
 					<div class="navbar-header">
-						<a href="{{ url_for('chatui.chatbot_lang', lifoid_id=lifoid_id, lang_code=lang) }}" class="navbar-brand">{{ lifoid_name }}</a>
+						<a href="{{ url_for('chatui.chatbot_lang', lifoid_id=lifoid_id, lang_code=lang) }}" class="navbar-brand">
+							<img src="{{ url_for("chatui.static", filename="assets/img/chatbot.png") }}" class="logo" alt="{{ lifoid_name }}" />
+						</a>
 					</div>
 					<!-- end mobile sidebar expand / collapse button -->
 					<!-- begin navbar-left -->
@@ -131,9 +133,8 @@
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-wechat fa-2x"></i>
-								<span class="hidden-xs">
-									<span class="hidden-xs">{{ _('Chat') }}</span>
-									<b class="caret"></b>
+								<span class="hidden-xs">{{ _('Chat') }}</span>
+								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu pull-right">
 								{% for item in chat_menu %}
