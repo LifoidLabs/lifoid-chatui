@@ -170,32 +170,35 @@ def synthesis(lifoid_id, lang_code):
     user = get_user(data)
     if user is None:
         abort(403)
-    text = data['q']['text']
-    voice = request.form.get('voice', settings.chatui.voice)
-    bot_conf = get_agent_conf(lifoid_id)
-    if bot_conf is None:
-        return make_response('Unknown Bot', 404)
-    # For each block, invoke Polly API, which will transform text into audio
-    voice = bot_conf['voice'].get(lang_code, None)
-    if voice is None:
-        return make_response('This language is not supported', 404)
-    polly = boto3.client('polly')
-    response = polly.synthesize_speech(
-        OutputFormat='mp3',
-        Text=text,
-        VoiceId=voice
-    )
-    # Save the audio stream returned by Amazon Polly on Lambda's temp
-    # directory. If there are multiple text blocks, the audio stream
-    # will be combined into a single file.
-    if "AudioStream" in response:
-        with closing(response["AudioStream"]) as stream:
-            resp = {}
-            buff = stream.read()
-            resp['audio'] = base64.b64encode(buff).decode("UTF-8")
-            return jsonify(resp)
+    text = data['q'].get('text', None)
+    if text is not None:
+        voice = request.form.get('voice', settings.chatui.voice)
+        bot_conf = get_agent_conf(lifoid_id)
+        if bot_conf is None:
+            return make_response('Unknown Bot', 404)
+        # For each block, invoke Polly API, which will transform text into audio
+        voice = bot_conf['voice'].get(lang_code, None)
+        if voice is None:
+            return make_response('This language is not supported', 404)
+        polly = boto3.client('polly')
+        response = polly.synthesize_speech(
+            OutputFormat='mp3',
+            Text=text,
+            VoiceId=voice
+        )
+        # Save the audio stream returned by Amazon Polly on Lambda's temp
+        # directory. If there are multiple text blocks, the audio stream
+        # will be combined into a single file.
+        if "AudioStream" in response:
+            with closing(response["AudioStream"]) as stream:
+                resp = {}
+                buff = stream.read()
+                resp['audio'] = base64.b64encode(buff).decode("UTF-8")
+                return jsonify(resp)
+        else:
+            return make_response('OK', 200)
     else:
-        return make_response('OK', 200)
+        abort(404)
 
 
 @speech.route("/chatbot/<lifoid_id>/lang/<lang_code>/stt", methods=["POST"])
