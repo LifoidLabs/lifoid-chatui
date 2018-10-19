@@ -9,7 +9,7 @@ function AvatarImage(letters, size, color) {
 
   // Generate a random color every time function is called
   // var color =  "#" + (Math.random() * 0xFFFFFF << 0).toString(16);
-  var color = "#" + color;
+  var color = color;
 
   // Set canvas with & height
   canvas.width = size;
